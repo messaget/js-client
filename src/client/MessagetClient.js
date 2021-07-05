@@ -5,6 +5,7 @@ export const MessaGetEvent = {
     CONNECT: "CONNECT",
     ERROR: "ERROR",
     DISCONNECT: "DISCONNECT",
+    MESSAGE: "MESSAGE"
 }
 
 export class MGClient {
@@ -31,6 +32,10 @@ export class MGClient {
         if (namespace.length === 0) throw new Error("You must provide a namespace");
     }
 
+    on(event, handler) {
+        this.eventManager.on(event, handler)
+    }
+
     connect() {
         this._setupWs()
     }
@@ -50,6 +55,9 @@ export class MGClient {
             this.isConnected = false;
             this.isConnecting = false;
             this.eventManager.fire(MessaGetEvent.ERROR, e)
+        }
+        this._ws.onmessage = (e) => {
+            this.eventManager.fire(MessaGetEvent.MESSAGE, e.data)
         }
         this._ws.onopen = (e) => {
             this.isConnected = true;
