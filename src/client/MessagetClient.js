@@ -11,21 +11,21 @@ export const MessaGetEvent = {
 export class MGClient {
 
     constructor(server, namespace, options = {}) {
-        this.eventManager = new EventManager();
-        this.server = server;
-        this.namespace = namespace;
-        this.endpiont = "";
-        this.isConnected = false;
-        this.isConnecting = false;
+        this._eventManager = new EventManager();
+        this._server = server;
+        this._namespace = namespace;
+        this._endpiont = "";
+        this._isConnected = false;
+        this._isConnecting = false;
 
         if (options.secure) {
-            this.endpiont = "wss://" + this.server
+            this._endpiont = "wss://" + this._server
         } else {
-            this.endpiont = "ws://" + this.server
+            this._endpiont = "ws://" + this._server
         }
 
         if (options.port) {
-            this.endpiont += ":" + options.port;
+            this._endpiont += ":" + options.port;
         }
 
         // append namespace
@@ -33,7 +33,7 @@ export class MGClient {
     }
 
     on(event, handler) {
-        this.eventManager.on(event, handler)
+        this._eventManager.on(event, handler)
     }
 
     connect() {
@@ -41,33 +41,33 @@ export class MGClient {
     }
 
     _setupWs() {
-        if (this.isConnected || this.isConnecting) return
-        this.isConnecting = true;
+        if (this._isConnected || this._isConnecting) return
+        this._isConnecting = true;
         this._ws = new WebSocket(this._buildEndpoint())
         this._ws.onclose = (e) => {
             // close
-            this.isConnected = false;
-            this.isConnecting = false;
-            this.eventManager.fire(MessaGetEvent.DISCONNECT, e)
+            this._isConnected = false;
+            this._isConnecting = false;
+            this._eventManager.fire(MessaGetEvent.DISCONNECT, e)
         }
         this._ws.onerror = (e) => {
             // close
-            this.isConnected = false;
-            this.isConnecting = false;
-            this.eventManager.fire(MessaGetEvent.ERROR, e)
+            this._isConnected = false;
+            this._isConnecting = false;
+            this._eventManager.fire(MessaGetEvent.ERROR, e)
         }
         this._ws.onmessage = (e) => {
-            this.eventManager.fire(MessaGetEvent.MESSAGE, e.data)
+            this._eventManager.fire(MessaGetEvent.MESSAGE, e.data)
         }
         this._ws.onopen = (e) => {
-            this.isConnected = true;
-            this.isConnecting = false;
-            this.eventManager.fire(MessaGetEvent.CONNECT, e)
+            this._isConnected = true;
+            this._isConnecting = false;
+            this._eventManager.fire(MessaGetEvent.CONNECT, e)
         }
     }
 
     _buildEndpoint() {
-        return this.endpiont + "/public/attach?namespace=" + this.namespace
+        return this._endpiont + "/public/attach?namespace=" + this._namespace
     }
 
 }
