@@ -6,6 +6,8 @@ export const MessaGetClient = MGClient
 export const MessaGetController = MGController
 
 // window attachments
-window.MessaGetController = MGController
-window.MessaGetClient = MGClient
-window.MessaGetEvent = MessaGetEvent
+if (window) {
+    window.MessaGetController = MGController
+    window.MessaGetClient = MGClient
+    window.MessaGetEvent = MessaGetEvent
+}
