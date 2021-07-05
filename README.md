@@ -1,7 +1,8 @@
 <p align="center">
   <img src="https://i.imgur.com/7dtHykL.png" />
 </p>
-This is a simple Client/Controller implementation for the [MessaGet Server](https://github.com/messaget/messaget-server). Please visit the main repository for details about the project.
+
+This is a simple Client/Controller implementation for the [MessaGet Server](https://github.com/messaget/messaget-server). Please visit the main repository for details about the project. This library can be implemented in your public web-app to receive real-time content updates, or in your ES6-based backend service with the Controller. Please note that you should never use the controller from public sources to protect your password and sensitive user data. Reverse-messaging (sending data from the client to a controller) is planned and will be added in the near future.
 
 ### Client
 The Client is what connects to the server through the frontend, requires websocket to work, and is attached to the window by default (but is also accessible as ES6 import).
@@ -28,16 +29,20 @@ client.on(MessaGetEvent.ERROR, function (error) {
 client.on(MessaGetEvent.MESSAGE, function (message) {
     console.log("message", message)
 })
+
+// connect
+client.connect()
 ```
 
 ### Controller
-The Controller is a privileged connection (using both REST and WebSocket) which is used to query clients, send data and manage connections.
+The Controller is a privileged connection (using both REST and WebSocket) which is used to query clients, send data and manage connections. Websocket can be disabled, which would enable usage in headless workers (like cloudflare or fastly workers, to send messages from your backend service infrastructure)
 
 Example:
 ```javascript
 let controller = new MessaGetController("localhost", "super-secure-password", {
     port: 8080, // OPTIONAL - server port
     secure: false, // OPTIONAL - use SSL
+    useWs: false, // OPTIONAL - only use REST
 })
 
 // find all notification clients
