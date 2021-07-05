@@ -28,6 +28,9 @@ for (let i = 0; i < notificationListeners.length; i++) {
 let client = await controller.findClientById("c3hio6o6n88gufpd6l70");
 // sendMessage will thrown an exception in this case if the client has disconnected between these function calls
 await client.sendMessage("Hey there! I'm a personal message")
+
+// we send a message, now terminate their connection
+client.kick()
 ```
 
 ### Public Client
@@ -38,6 +41,7 @@ Example:
 let client = new MessaGetClient("localhost", "notifications:personal-user -oken", {
     port: 8080, // OPTIONAL - server port
     secure: false, // OPTIONAL - use SSL
+    password: "client-pass" // OPTIONAL - client password if required by the server
 })
 
 client.on(MessaGetEvent.CONNECT, function (event) {

@@ -7,6 +7,14 @@ export class MGConnectedClient {
         this._ip = ip;
     }
 
+    async kick() {
+        await this._controller._makeRequest({
+            intent: "KICK_CLIENTS_BY_ID",
+            targets: [this._id],
+        })
+    }
+
+
     async sendMessage(message) {
         let response = await this._controller._makeRequest({
             intent: "SEND_TO_IDS",

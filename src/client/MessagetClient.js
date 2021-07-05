@@ -24,6 +24,10 @@ export class MGClient {
             this._endpiont = "ws://" + this._server
         }
 
+        if (options.password) {
+            this._password = options.password;
+        }
+
         if (options.port) {
             this._endpiont += ":" + options.port;
         }
@@ -67,7 +71,7 @@ export class MGClient {
     }
 
     _buildEndpoint() {
-        return this._endpiont + "/public/attach?namespace=" + this._namespace
+        return this._endpiont + "/public/attach?namespace=" + this._namespace + "&password=" + this._password
     }
 
 }
