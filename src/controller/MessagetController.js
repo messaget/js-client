@@ -123,7 +123,7 @@ export class MGController {
     }
 
     _buildWsEndpoint() {
-        return this._endpiont + "/api/attach?password=" + this._password
+        return this._endpiont.replace("http", "ws") + "/api/attach?password=" + this._password
     }
 
     _handleWsInput(dataAsJson) {
