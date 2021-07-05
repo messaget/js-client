@@ -31,6 +31,15 @@ await client.sendMessage("Hey there! I'm a personal message")
 
 // we send a message, now terminate their connection
 client.kick()
+
+// the controller even supports real time listeners for server events
+controller.on(MessaGetControllerEvent.CLIENT_JOINED, (client) => {
+    console.log("Client", client.getId(), "connected")
+})
+
+controller.on(MessaGetControllerEvent.CLIENT_LEFT, (client) => {
+    console.log("Client", client.getId(), "disconnected")
+})
 ```
 
 ### Public Client

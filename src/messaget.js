@@ -1,5 +1,5 @@
 import {MessaGetEvent, MGClient} from "./client/MessagetClient";
-import {MGController} from "./controller/MessagetController";
+import {MessaGetControllerEvent, MGController} from "./controller/MessagetController";
 
 // exports for es6
 export const MessaGetClient = MGClient
@@ -10,4 +10,5 @@ if (window) {
     window.MessaGetController = MGController
     window.MessaGetClient = MGClient
     window.MessaGetEvent = MessaGetEvent
+    window.MessaGetControllerEvent = MessaGetControllerEvent
 }
