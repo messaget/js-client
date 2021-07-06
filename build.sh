@@ -1,5 +1,5 @@
 npm run-script build
-cp index.js dist/
+cp web-bundle.js dist/
 
 . ./build/data.bin
 
@@ -32,3 +32,4 @@ replace_all "__BUILD_AUTHOR__" $(git log -1 --pretty=format:'%an')
 rm build/data.bin
 set_var "BUILD_NUM" $BUILD_NUM
 chmod +x ./build/data.bin
+rm web-bundle.js

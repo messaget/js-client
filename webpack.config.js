@@ -3,11 +3,11 @@ module.exports = {
     mode: "production",
 
     entry: {
-        main: './messaget.js',
+        main: './index.js',
     },
     output: {
         filename: (chunkData) => {
-            return chunkData.chunk.name === 'main' ? 'index.js' : '[name]/[name].js';
+            return chunkData.chunk.name === 'main' ? 'web-bundle.js' : '[name]/[name].js';
         },
         path: __dirname,
     }
