@@ -65,7 +65,7 @@ export class MGController {
     /**
      * Find all clients that partially match namespace
      * @param namespace Partial namespace
-     * @returns {Promise<null|MGConnectedClient>}
+     * @returns {Promise<null|MGConnectedClient[]>}
      */
     async findClientsByPartialNamespace(namespace) {
         let clientsJson = await this._makeRequest({
@@ -75,13 +75,13 @@ export class MGController {
 
         let results = this._mapClientsArr(clientsJson);
         if (results.length === 0) return null;
-        return results[0];
+        return results;
     }
 
     /**
      * Find all clients that exactly match a namespace
      * @param namespace Partial namespace
-     * @returns {Promise<null|MGConnectedClient>}
+     * @returns {Promise<null|MGConnectedClient[]>}
      */
     async findClientsByExactNamespace(namespace) {
         let clientsJson = await this._makeRequest({
@@ -91,7 +91,7 @@ export class MGController {
 
         let results = this._mapClientsArr(clientsJson);
         if (results.length === 0) return null;
-        return results[0];
+        return results;
     }
 
     /**
