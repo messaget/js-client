@@ -5,10 +5,9 @@ import {MessaGetControllerEvent, MGController} from "./controller/MessagetContro
 export const MessaGetClient = MGClient
 export const MessaGetController = MGController
 
-// window attachments
-if (window) {
-    window.MessaGetController = MGController
-    window.MessaGetClient = MGClient
-    window.MessaGetEvent = MessaGetEvent
-    window.MessaGetControllerEvent = MessaGetControllerEvent
+export const MessaGet = {
+    Client: MGClient,
+    Controller: MGController,
+    Events: MessaGetEvent,
+    ControllerEvents: MessaGetControllerEvent
 }

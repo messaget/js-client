@@ -10,5 +10,7 @@ module.exports = {
             return chunkData.chunk.name === 'main' ? 'web-bundle.js' : '[name]/[name].js';
         },
         path: __dirname,
+        library: 'MessaGet',
+        libraryTarget: "window"
     }
 };
