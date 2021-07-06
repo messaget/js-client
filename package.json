@@ -1,6 +1,6 @@
 {
-  "private": true,
-  "name": "messaget",
+  "private": false,
+  "name": "@mindgamesnl/messaget",
   "version": "1.0.0",
   "description": "Simple MessaGet javascript implementation",
   "main": "src/boot.js",
@@ -27,5 +27,21 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2015-ie": "6.7.0",
     "js-simple-events": "^1.2.3"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/messaget/js-client.git"
+  },
+  "keywords": [
+    "messaget",
+    "client",
+    "controller"
+  ],
+  "bugs": {
+    "url": "https://github.com/messaget/js-client/issues"
+  },
+  "homepage": "https://github.com/messaget/js-client#readme"
 }
