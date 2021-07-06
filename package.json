@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@mindgamesnl/messaget",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Simple MessaGet javascript implementation",
   "main": "src/boot.js",
   "scripts": {
