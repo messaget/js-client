@@ -15,12 +15,23 @@ export class PendingRequest {
             if (this._finished) {
                 // timeout
                 delete controller._pendingWsRequests[id]
-                this._reject({
-                    code: 500,
-                    response: "Request timed out..."
-                })
+                this._reject("Request timed out...")
             }
         }, 3000)
+    }
+
+    fail(statusCode, response) {
+        this._finished = true;
+        this._reject(response + " - " + statusCode)
+
+    }
+
+    resolve(statusCode, response) {
+        this._finished = true;
+        if (statusCode !== 200) {
+            throw new Error(statusCode + " - " + JSON.stringify(response))
+        }
+        this._resolve(response)
     }
 
     getPromise() {

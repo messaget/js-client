@@ -150,9 +150,10 @@ export class MGController {
                 }
                 if (dataAsJson.failed) {
                     // failure
+                    transaction.fail(dataAsJson.status, dataAsJson.response)
                 } else {
                     // handle response
-
+                    transaction.resolve(dataAsJson.status, dataAsJson.response)
                 }
                 break
         }
