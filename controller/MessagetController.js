@@ -206,7 +206,7 @@ export class MGController {
             return await this._makeWsRequest(data);
         } else {
             // use http, potentially init ws if its enabled
-            this._setupWs()
+            if (this._allowWs) this._setupWs()
             return await this._makeHttpRequest(data);
         }
     }
