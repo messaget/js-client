@@ -1,5 +1,7 @@
 import {MGConnectedClient} from "./models/client";
 import EventManager from 'js-simple-events'
+import {getRandomString} from "../utils/id";
+import {PendingRequest} from "./models/pendingrequest";
 
 export const MessaGetControllerEvent = {
     CLIENT_JOINED: "CLIENT_JOINED",
@@ -17,6 +19,8 @@ export class MGController {
         this._endpiont = "";
         this._isConnected = false;
         this._isConnecting = false;
+        this._allowWs = !options.disableWs;
+        this._pendingWsRequests = {};
 
         if (options.secure) {
             this._endpiont = "https://" + this._server
@@ -137,6 +141,20 @@ export class MGController {
                 // client left
                 this._eventManager.fire(MessaGetControllerEvent.CLIENT_LEFT, this._mapClientsArr([dataAsJson.client])[0])
                 break
+
+            case "TRANSACTION":
+                let transaction = this._pendingWsRequests[dataAsJson.transaction_id]
+                if (transaction == null) {
+                    console.error("Received response for unknown transaction " + dataAsJson.transaction_id)
+                    return
+                }
+                if (dataAsJson.failed) {
+                    // failure
+                } else {
+                    // handle response
+
+                }
+                break
         }
     }
 
@@ -182,6 +200,29 @@ export class MGController {
     }
 
     async _makeRequest(data) {
+        if (this._isConnected) {
+            // use ws, register request, map it, prepare promise, send, and return
+            return await this._makeWsRequest(data);
+        } else {
+            // use http, potentially init ws if its enabled
+            this._setupWs()
+            return await this._makeHttpRequest(data);
+        }
+    }
+
+    _makeWsRequest(data) {
+        // make request
+        let id = getRandomString(25)
+        this._pendingWsRequests[id] = new PendingRequest(this, id)
+
+        // send
+        data.transaction_id = id;
+        this._ws.send(JSON.stringify(data));
+
+        return this._pendingWsRequests[id].getPromise();
+    }
+
+    async _makeHttpRequest(data) {
         try {
             let request = await fetch(this._buildEndpoint(), {
                 body: JSON.stringify(data),
@@ -197,6 +238,5 @@ export class MGController {
             console.error(e)
             throw new Error("Failed to make request");
         }
-
     }
 }

@@ -18,7 +18,7 @@ Example:
 let controller = new MessaGetController("localhost", "super-secure-password", {
     port: 8080, // OPTIONAL - server port
     secure: false, // OPTIONAL - use SSL
-    useWs: false, // OPTIONAL - only use REST
+    disableWs: true, // OPTIONAL - only use REST
 })
 
 // find all notification clients
